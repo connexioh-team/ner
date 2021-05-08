@@ -1,16 +1,10 @@
 # Pytorch-BERT-CRF-NER
 
-[![소스]](https://github.com/eagle705/pytorch-bert-crf-ner)
+[소스](https://github.com/eagle705/pytorch-bert-crf-ner)
 
 이것은 오로시 prediction용으로 활용하기 위해서 간소화한 버전임
 
 A PyTorch implementation of Korean NER Tagger based on BERT + CRF (PyTorch v1.2 / Python 3.x)  
-
-![kobert_crf_fig](./assets/kobert_crf_fig.png)
-
-### Examples
-
-![ner_jupyter_notebook](./assets/ner_jupyter_notebook_3.png)
 
 ### Logs
 ```
