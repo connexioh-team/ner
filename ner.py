@@ -45,7 +45,7 @@ class DecoderFromNamedEntitySequence():
 def main():
     cur_path = os.path.dirname(sys.argv[0])
     if cur_path:
-        print(cur_path)
+        print(cur_path, file=sys.stderr)
         os.chdir(cur_path)
 
     model_dir = Path('./experiments/base_model_with_crf')
@@ -76,7 +76,7 @@ def main():
     for k, v in checkpoint['model_state_dict'].items():
         new_key_name = k.replace("module.", '')
         if new_key_name not in model_dict:
-            print("{} is not int model_dict".format(new_key_name))
+            print("{} is not int model_dict".format(new_key_name), file=sys.stderr)
             continue
         convert_keys[new_key_name] = v
 
@@ -95,7 +95,7 @@ def main():
             list_of_pred_ids = model(x_input)
 
             list_of_ner_word = decoder_from_res(list_of_input_ids=list_of_input_ids, list_of_pred_ids=list_of_pred_ids)
-            print(list_of_ner_word)
+            print(','.join(list_of_ner_word))
             print("")
     except:
         print("EOF")
