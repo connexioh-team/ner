@@ -1,0 +1,8 @@
+wheel
+gluonnlp==0.10.0
+konlpy==0.5.2
+mxnet==1.8.0.post0
+pytorch-crf @ git+https://github.com/kmkurn/pytorch-crf@e843718540512eb04d9b756fca04a0915affe175
+sentencepiece==0.1.95
+torch==1.8.1
+transformers==4.5.1
