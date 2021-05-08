@@ -1,3 +1,4 @@
+regex
 wheel
 gluonnlp==0.10.0
 konlpy==0.5.2
