@@ -69,9 +69,7 @@ def main():
 
     # load
     model_dict = model.state_dict()
-    checkpoint = torch.load("./best-epoch-16-step-1500-acc-0.993.bin", map_location=torch.device('cpu'))
-    #checkpoint = torch.load("./experiments/base_model_with_crf/best-epoch-16-step-1500-acc-0.993.bin", map_location=torch.device('cpu'))
-    # checkpoint = torch.load("./experiments/base_model_with_crf_val/best-epoch-12-step-1000-acc-0.960.bin", map_location=torch.device('cpu'))
+    checkpoint = torch.load("./model.bin", map_location=torch.device('cpu'))
     convert_keys = {}
     for k, v in checkpoint['model_state_dict'].items():
         new_key_name = k.replace("module.", '')
