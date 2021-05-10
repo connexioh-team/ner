@@ -21,6 +21,9 @@ class DecoderFromNamedEntitySequence():
         input_token = self.tokenizer.decode_token_ids(list_of_input_ids)[0]
         pred_ner_tag = [self.index_to_ner[pred_id] for pred_id in list_of_pred_ids[0]]
 
+        print("input token = {}".format(input_token), file=sys.stderr)
+        print("tag = {}".format(pred_ner_tag), file=sys.stderr)
+
         # ----------------------------- parsing list_of_ner_word ----------------------------- #
         list_of_ner_word = []
         entity_word, entity_tag, prev_entity_tag = "", "", ""
@@ -29,7 +32,7 @@ class DecoderFromNamedEntitySequence():
                 entity_tag = pred_ner_tag_str[-3:]
 
                 if prev_entity_tag != entity_tag and prev_entity_tag != "":
-                    list_of_ner_word.append(regex.sub("[^\p{L}\p{M}\p{N}\s]+", "", entity_word) + "/" + prev_entity_tag)
+                    list_of_ner_word.append(regex.sub("[^\p{L}\p{M}\p{N}\p{Z}]+", "", entity_word.replace("▁", " ").strip()) + "/" + prev_entity_tag)
 
                 entity_word = input_token[i]
                 prev_entity_tag = entity_tag
@@ -37,7 +40,7 @@ class DecoderFromNamedEntitySequence():
                 entity_word += input_token[i]
             else:
                 if entity_word != "" and entity_tag != "":
-                    list_of_ner_word.append(regex.sub("[^\p{L}\p{M}\p{N}\s]+", "", entity_word) + "/" + entity_tag)
+                    list_of_ner_word.append(regex.sub("[^\p{L}\p{M}\p{N}\p{Z}]+", "", entity_word.replace("▁", " ").strip()) + "/" + entity_tag)
                 entity_word, entity_tag, prev_entity_tag = "", "", ""
 
         return list_of_ner_word
@@ -45,7 +48,6 @@ class DecoderFromNamedEntitySequence():
 def main():
     cur_path = os.path.dirname(sys.argv[0])
     if cur_path:
-        print(cur_path, file=sys.stderr)
         os.chdir(cur_path)
 
     model_dir = Path('./experiments/base_model_with_crf')
@@ -93,10 +95,12 @@ def main():
             list_of_pred_ids = model(x_input)
 
             list_of_ner_word = decoder_from_res(list_of_input_ids=list_of_input_ids, list_of_pred_ids=list_of_pred_ids)
-            print(','.join(list_of_ner_word))
-            print("")
+            if list_of_ner_word:
+                print(",".join(list_of_ner_word))
+            else:
+                print("/")
     except:
-        print("EOF")
+        print("EOF", file=sys.stderr)
 
 
 if __name__ == "__main__":
