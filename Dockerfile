@@ -1,6 +1,13 @@
 FROM python:3.7-slim
 ENV NODE_ENV=production
 
+#
+# (사전) model.bin (모델 파일)을 현재 디렉토리에 가져다 놓는다.
+# 빌드
+# docker build -f Dockerfile -t registry.connexioh.net/connexioh/ner .
+# docker push registry.connexioh.net/connexioh/ner
+#
+
 RUN apt update -y && apt install -y locales locales-all git curl
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
